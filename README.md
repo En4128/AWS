@@ -162,9 +162,10 @@ PORT=3000
 STATIC_DIR="./client"
 SECRET_KEY="sk_test_..."
 ```
-Run the application persistently in the background using a process manager like `pm2`:
-```bash
-sudo npm install pm2 -g
-pm2 start server.js --name "workshop-stripe-app"
-```
+Initialise and start the project
+npm install
+npm run start
+NOTE - We will have to edit the inbound rules in the security group of our EC2, in order to allow traffic from our particular port
+
+Project is deployed on AWS 🎉
 The app will now be online and ready for traffic at `http://<EC2_PUBLIC_ELASTIC_IP>:3000`.
