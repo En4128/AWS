@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registration Successful - Kubesimplify Workshops</title>
+    <meta name="description" content="Thank you for registering for the Kubesimplify workshop. Your checkout was successful, and joining details will be emailed shortly." />
+    <link rel="stylesheet" type="text/css" href="css/success.css" />
+    <link rel="icon" type="image/x-icon" href="assets/icon.svg" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <a class="nav-content" href="https://kubesimplify.com/" target="_blank">
+        <img src="assets/logo.svg" alt="Kubesimplify Logo" />
+      </a>
+    </div>
+
+    <!-- Success Content -->
+    <div class="container">
+      <div class="box">
+        <div class="title">
+          <h1>Success 🎉</h1>
+        </div>
+        <img src="assets/success.svg" alt="Success Checkmark" />
+        <p style="margin-bottom: 12px">
+          Thank you for purchasing! <br />
+          We'll email you the workshop and joining details, shortly.
+        </p>
+        <p>
+          If you do not receive our mail or have any questions, please email at
+          <a href="mailto:orders@example.com">kubesimplify@gmail.com</a>
+        </p>
+        <div class="button">
+          <input type="button" value="Home" id="home-btn" />
+        </div>
+      </div>
+
+      <!-- JSON checkout session details styled as terminal code -->
+      <pre class="json" id="session-data">Loading session data...</pre>
+    </div>
+
+    <!-- Client-side script -->
+    <script>
+      var sessionData = document.getElementById("session-data");
+
+      // Pull the session ID from URL params
+      var params = new URLSearchParams(window.location.search);
+      var id = params.get("id");
+
+      if (id) {
+        fetch("/checkout-session?id=" + id)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+          })
+          .then((session) => {
+            sessionData.innerText = JSON.stringify(session, null, 2);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            sessionData.innerText = "Session details could not be retrieved. Reference Session ID: " + id;
+          });
+      } else {
+        sessionData.innerText = "No session ID detected.";
+      }
+
+      // Home button navigation
+      var btn = document.getElementById("home-btn");
+      btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        location.href = window.location.origin;
+      });
+    </script>
+  </body>
+</html>
